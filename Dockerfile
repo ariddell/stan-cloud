@@ -31,3 +31,6 @@ RUN pip3 install bash_kernel
 RUN python2 -c "import pystan"
 RUN python3 -c "import pystan"
 RUN echo "library(rstan)" | R --no-save
+
+## copy default notebooks
+COPY ./*.ipynb /notebooks/ 
