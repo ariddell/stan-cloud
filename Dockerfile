@@ -20,7 +20,7 @@ RUN echo 'options(repos = "http://lib.stat.cmu.edu/R/CRAN/"); install.packages("
 RUN echo 'options(repos = "http://lib.stat.cmu.edu/R/CRAN/"); install.packages("xml2")' | R --no-save
 RUN echo 'options(repos = "http://lib.stat.cmu.edu/R/CRAN/"); install.packages("rversions")' | R --no-save
 RUN echo 'options(repos = "http://lib.stat.cmu.edu/R/CRAN/"); install.packages("devtools")' | R --no-save
-RUN echo 'options(repos = "http://lib.stat.cmu.edu/R/CRAN/"); source("http://mc-stan.org/rstan/install.R", echo = TRUE, max.deparse.length = 2000); install_rstan()' | R --no-save
+RUN echo 'options(repos = "http://lib.stat.cmu.edu/R/CRAN/"); install.packages("rstan", dependencies=TRUE)' | R --no-save
 RUN echo "options(repos = 'http://lib.stat.cmu.edu/R/CRAN/');" \
       "install.packages(c('rzmq','repr','IRkernel','IRdisplay'), repos = c('http://irkernel.github.io/', getOption('repos')), type = 'source'); IRkernel::installspec()" | R --no-save
 
