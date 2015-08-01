@@ -41,7 +41,7 @@ Environment="TOKEN=SECRETTOKEN"
 ExecStartPre=-/usr/bin/docker kill configproxy
 ExecStartPre=-/usr/bin/docker rm configproxy
 ExecStartPre=/usr/bin/docker pull jupyter/configurable-http-proxy
-ExecStart=/usr/bin/docker run --net=host --rm --name configproxy -e CONFIGPROXY_AUTH_TOKEN=$TOKEN jupyter/configurable-http-proxy --default-target http://127.0.0.1:9999
+ExecStart=/bin/bash -c '/usr/bin/docker run --net=host --rm --name configproxy -e CONFIGPROXY_AUTH_TOKEN=$TOKEN jupyter/configurable-http-proxy --default-target http://127.0.0.1:9999'
 ExecStop=/usr/bin/docker rm -f configproxy
 [Install]
 WantedBy=tmpnb.target
@@ -63,8 +63,7 @@ Environment="MEM_LIMIT=1024m"
 ExecStartPre=-/usr/bin/docker kill tmpnb
 ExecStartPre=-/usr/bin/docker rm tmpnb
 ExecStartPre=/usr//usr/bin/docker pull jupyter/tmpnb
-ExecStart=/usr/bin/docker run --net=host -e "CONFIGPROXY_AUTH_TOKEN=$TOKEN" --name=tmpnb -v /var/run/docker.sock:/docker.sock \
-    jupyter/tmpnb python orchestrate.py --image="$IMAGE" --cull_timeout="$CULL_TIMEOUT" --mem_limit="$MEM_LIMIT" --command="ipython notebook --NotebookApp.base_url={base_path} --ip=0.0.0.0 --port {port}"
+ExecStart=/bin/bash -c '/usr/bin/docker run --net=host -e "CONFIGPROXY_AUTH_TOKEN=$TOKEN" --name=tmpnb -v /var/run/docker.sock:/docker.sock jupyter/tmpnb python orchestrate.py --image="$IMAGE" --cull_timeout="$CULL_TIMEOUT" --mem_limit="$MEM_LIMIT" --command="ipython notebook --NotebookApp.base_url={base_path} --ip=0.0.0.0 --port {port}"'
 ExecStop=/usr/bin/docker rm -f tmpnb
 [Install]
 WantedBy=tmpnb.target
